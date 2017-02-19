@@ -28,7 +28,7 @@ BlogPosts.create(
 // send back JSON representation of all blog posts
 // on GET requests to root
 
-app.get('/blog-posts', (req, res) => {
+router.get('/', (req, res) => {
 	res.json(BlogPosts.get());
 });
 
@@ -39,7 +39,7 @@ app.get('/blog-posts', (req, res) => {
 // the id, which `BlogPosts` will create. This endpoint should
 // send a 400 error if the post doesn't contain
 // `title`, `content`, and `author`
-app.post('/blog-posts', (req, res) => {
+router.post('/', jsonParser, (req, res) => {
 	const requiredFields = ['title', 'content', 'author'];
 	for (let i=0; i<= requiredFields.length; i++){
 		const field = requiredFields[i];
@@ -49,7 +49,7 @@ app.post('/blog-posts', (req, res) => {
 			return req.status(400).send(message);
 		}
 	}
-	const post  = req.BlogPosts.create(req.body.title, req.body.content, req.body.author);
+	const post  = BlogPosts.create(req.body.title, req.body.content, req.body.author);
 	res.status(201).json(post);
 });
 
@@ -59,8 +59,8 @@ app.post('/blog-posts', (req, res) => {
 // the post matches the id of the path variable, and that the
 // following required fields are in request body: `id`, `title`,
 // `content`, `author`, `publishDate`
-app.put('/blog-posts/:id', (req, res) => {
-	const requiredFields = ['title', 'content', 'author'];
+router.put('/:id', jsonParser, (req, res) => {
+	const requiredFields = ['id', 'title', 'content', 'author', 'publishDate'];
 	for (let i=0; i <= requiredFields.length; i++){
 		const field = requiredFields[i];
 		if(!(field in req.body)){
@@ -69,16 +69,18 @@ app.put('/blog-posts/:id', (req, res) => {
 			return req.status(400).send(message);
 		}
 	}
-	if(req.params.id != req.body.id){
-		const message - `id of \`${req.params.id}\` does not match an existing ID in the \`${req.body.id}\`.`
+	if(req.params.id !== req.body.id){
+		const message = `id of \`${req.params.id}\` does not match an existing ID in the \`${req.body.id}\`.`
 		console.log(message);
 		return req.status(400),send(message);
 	}
 	console.log(`updating the \`${req.params.id}\` blog post.`);
 	const updatedPost = BlogPosts.update({
+		id: req.params.id,
 		title: req.body.title,
 		content: req.body.content,
-		author: req.body.author
+		author: req.body.author,
+		publishDate: req.body.publishDate
 	});
 	res.status(204).json(updatedPost);
 });
@@ -89,8 +91,11 @@ app.put('/blog-posts/:id', (req, res) => {
 // `BlogPosts.delete()`
 
 
-app.delete('/blog-posts/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
 	BlogPosts.delete(req.params.id);
 	console.log(`the \`${req.params.id}\` is being deleted.`);
 	res.status(204).end();
 });
+
+
+module.exports = router;

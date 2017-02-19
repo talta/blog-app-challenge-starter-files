@@ -18,6 +18,13 @@
     "express"
   ],
   "license": "MIT",
-  "repository": "https://github.com/talta/blog-app-challenge-starter-files.git",
-  "author": "talta <t.taltallc@gmail.com>"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/talta/blog-app-challenge-starter-files.git"
+  },
+  "author": "talta <t.taltallc@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/talta/blog-app-challenge-starter-files/issues"
+  },
+  "homepage": "https://github.com/talta/blog-app-challenge-starter-files#readme"
 }
