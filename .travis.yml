@@ -1,0 +1,9 @@
+language: node_js
+node_js: node
+deploy: floating-oasis-19525
+  provider: heroku
+  api_key:
+    secure: KP2Ogn0tMRriTsMxsbvIt94t2dogSJ0/vNMyg567wvPuDt4Ww1+TroFUm8CVp0clq6tNu1OXLwYasQU50vHVTCQTrUw9BFyarQYBy8wqDZ/EqhQZGIncScaIJlDGXfQQwHrqiUJp1Bl3EoioclMG+PmmrS1TfB/zODE3KePPqhZYbwFL+R647vJgmDoTq70D5l/dCPoFPQkFCX99V9qlJYmFsWyoqZyyM4AGdTeQ1YIrIWjKyCuGA3uHESRlCZ6QzcV7+JVl096dI4F3918HQi8q6uTbsb0/WhJmSKG9hktW1TfJVCdGRhjANWjABL0axjafkNVZySYJvMY2BCqxIABzV42jZ2x+rekdHDGAFMfvnztDsFTqrYouufbQb1KpP/oMce4yObRgF6xGRQrfRPy5tjyOqIpDwm2zB8JNjqzcAL07sDRixiyv8SEb9QCOhdiA1BQGxj5U5CsP2Eq+MwKvmqsuWMPt78GvSU5KLsWO3D0vvjrA9mfM2UeJhD9OMJrYIbTghWZkguHh5H3sEmUsFViYYrVzlyYtDg/JArN7lK7g4e6/y5PtnRzUfm24BKTMf6WC7kl4kJ9+z1q9MguaZw2Kv/CsVpOvZUVfjbDYadyHGbzBebdn6n1KeRhySCaMAuMvfP0yF/wMz0DMHqHWYX4fukLaBdx9gO3wsWs=
+  app: blog-app-challenge-starter-files
+  on:
+    repo: talta/blog-app-challenge-starter-files

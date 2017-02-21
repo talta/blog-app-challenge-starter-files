@@ -1,0 +1,80 @@
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+
+const {app, runServer, closeServer} = require('../server');
+
+const should = chai.should();
+
+app.use(chaiHttp);
+
+
+describe('blog posts CRUD', function(){
+	before(function(){
+		return runServer();
+	});
+
+	after(function(){
+		return closeServer();
+	})
+
+	it('should get all blog posts', function(){
+		return chai.request(app)
+		.get('/blog-Posts')
+		.then(function(res){
+			res.should.have.status(200);
+			res.should.be.json;
+			res.should.be.a('array');
+			res.body.length.should.be.at.least(1);
+			const expectedKeys = ['title', 'content', 'author'];
+			res.body.forEach(function(item){
+				item.should.be.a('object');
+				item.should.include.keys(expectedKeys);
+			});
+		});
+	});
+	it('should create new blog post', function(){
+		const newBlogPost =  {title: 'test blog post', content: 'this is test info', author: 'tatest'};
+		request chai.request(app);
+		.post('/blog-Posts')
+		.send(newBlogPost)
+		.then(function(res){
+			res.body.should.have.status(201);
+			res.body.should.be.json;
+			res.body.should.be.a('object');
+			res.body.should.include.keys('title', 'content', 'author', 'id');
+			res.body.id.should.not.be.null;
+			res.body.should.deep.equal(Object.assign(newBlogPost, {id:res.body.id}));
+		});
+	});
+	it('should update the blog post', function(){
+		const updatePost = {
+			author: 'talta',
+			content: 'this is test content from the tester'
+		}
+		return chai.request(app);
+		.get('/blog-Posts')
+		.then(function(res){
+			updatePost.id = res.body[0].id;
+			return chai.request(app)
+			.then(`/blog-Posts/${updatePost.id}`)
+			.send(updatePosts)
+
+		})
+		.then(function(){
+
+			res.body.should.be.a('object');
+			res.body.status.should.be(204);
+			res.body.should.be.json;
+			res.body.should.deep.equal(updatePost);
+		});
+	});
+	it('should delete a blog on delete', function(){
+		return chai.request(app);
+		.get('/blog-Posts')
+		.then(function(res){
+			return chai.request(app);
+			.delete(`/blog-Posts/${res.body[0].id}`);
+				res.body.status.should.be(204);
+		});
+	});
+});
