@@ -27,7 +27,7 @@ const BlogPosts = {
     this.posts.push(post);
     return post;
   },
-  get: function(id=null) {
+  get: function(id) {
     // if id passed in, retrieve single post,
     // otherwise send all posts.
     if (id !== null) {
